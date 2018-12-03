@@ -1,3 +1,4 @@
 module.exports = {
-    mongoURI: 'mongodb://localhost/mail'
+    mongoURI: YOUR_CONNECTION,
+    secretOrKey: YOUR_SECRET
 }
