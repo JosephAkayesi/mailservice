@@ -7,6 +7,6 @@
 6. _Optionally change secretOrKey to your databse secret or remove_
 7. Now run ```npm run server```
 8. Move to another terminal and run ```npm start```
-9. Your app should start on __http://localhost:3000/
+9. Your app should start on http://localhost:3000/
 
 ###### You have installed mailservice succcessfully and you can now add it to your website. 
