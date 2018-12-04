@@ -30,7 +30,18 @@ class Mailing extends Component {
             message: this.state.message
         }
 
+<<<<<<< HEAD
         this.props.sendMail(newMessage, this.toggleMessageSentSuccessfully, this.toggleMessageSentFailed)
+=======
+        axios.post('/message/send', newMessage)
+            .then(res => console.log(`Message sent succesffuly with payload ${util.inspect(res.data)}`))
+            .then(this.messageSentSuccessfully)
+            .then(this.clearInputFieldsOnMessageSendSuccessful)
+            .catch(err => {
+                console.log(err.message);
+                this.messageSentFailed();
+            });
+>>>>>>> 61a5c2659cffb45bdba852515544a0aa62874b64
     }
 
     changeIsMessageSentSuccessfully = () => {
@@ -41,6 +52,7 @@ class Mailing extends Component {
         this.setState({ isMessageSentFailed: !this.state.isMessageSentFailed });
     }
 
+<<<<<<< HEAD
     toggleMessageSentSuccessfully = () => {
         setTimeout(this.changeIsMessageSentSuccessfully);
         setTimeout(this.changeIsMessageSentSuccessfully, 12000);
@@ -49,6 +61,24 @@ class Mailing extends Component {
     toggleMessageSentFailed = () => {
         setTimeout(this.changeIsMessageSentFailed);
         setTimeout(this.changeIsMessageSentFailed, 12000);
+=======
+    clearInputFieldsOnMessageSendSuccessful = () => {
+        this.setState({
+            name: '',
+            email: '',
+            message: ''
+        });
+    }
+    
+    messageSentSuccessfully = () => {
+        setTimeout(this.changeIsMessageSentSuccessfully, 100);
+        setTimeout(this.changeIsMessageSentSuccessfully, 10000);
+    }
+
+    messageSentFailed = () => {
+        setTimeout(this.changeIsMessageSentFailed, 100);
+        setTimeout(this.changeIsMessageSentFailed, 10000);
+>>>>>>> 61a5c2659cffb45bdba852515544a0aa62874b64
     }
 
     render() {
@@ -62,15 +92,15 @@ class Mailing extends Component {
                         <h1 className="display-4">Stay in touch</h1>
                         <div className="form-group">
                             <label>Name</label>
-                            <input type="text" name="name" className="form-control" onChange={this.onInputChange} />
+                            <input type="text" name="name" className="form-control" onChange={this.onInputChange} value={this.state.name} />
                         </div>
                         <div className="form-group">
                             <label>Email</label>
-                            <input type="email" name="email" className="form-control" onChange={this.onInputChange} />
+                            <input type="email" name="email" className="form-control" onChange={this.onInputChange} value={this.state.email} />
                         </div>
                         <div className="form-group">
                             <label>Message</label>
-                            <textarea name="message" className="form-control" onChange={this.onInputChange}></textarea>
+                            <textarea name="message" className="form-control" onChange={this.onInputChange} value={this.state.message}></textarea>
                         </div>
                         <button className="btn btn-dark">Submit</button>
                     </form>
