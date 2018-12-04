@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import util from 'util';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { sendMail } from '../../redux/actions/mailActions';
+
 
 class Mailing extends Component {
-    constructor(){
+    constructor() {
         super();
 
         this.state = {
@@ -11,7 +13,7 @@ class Mailing extends Component {
             email: '',
             message: '',
             isMessageSentSuccesfully: false,
-            isMessageSentFailed: true
+            isMessageSentFailed: true,
         }
     }
 
@@ -21,20 +23,14 @@ class Mailing extends Component {
 
     submitMessageForm = (event) => {
         event.preventDefault();
-        
+
         const newMessage = {
             name: this.state.name,
             email: this.state.email,
             message: this.state.message
         }
 
-        axios.post('/message/send', newMessage)
-            .then(res => console.log(`Message sent succesffuly with payload ${util.inspect(res.data)}`))
-            .then(this.changeIsMessageSentSuccessfully)
-            .catch(err => {
-                console.log(err.message);
-                this.changeIsMessageSentFailed();
-            });
+        this.props.sendMail(newMessage, this.toggleMessageSentSuccessfully, this.toggleMessageSentFailed)
     }
 
     changeIsMessageSentSuccessfully = () => {
@@ -45,10 +41,20 @@ class Mailing extends Component {
         this.setState({ isMessageSentFailed: !this.state.isMessageSentFailed });
     }
 
+    toggleMessageSentSuccessfully = () => {
+        setTimeout(this.changeIsMessageSentSuccessfully);
+        setTimeout(this.changeIsMessageSentSuccessfully, 12000);
+    }
+
+    toggleMessageSentFailed = () => {
+        setTimeout(this.changeIsMessageSentFailed);
+        setTimeout(this.changeIsMessageSentFailed, 12000);
+    }
+
     render() {
         const showHideSuccessMessage = this.state.isMessageSentSuccesfully ? "alert alert-dismissible alert-success mt-4" : "alert alert-dismissible alert-success d-none"
         const showHideFailureMessage = this.state.isMessageSentFailed ? "alert alert-dismissible alert-danger d-none" : "alert alert-dismissible alert-danger mt-4"
-        
+
         return (
             <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6 mx-auto">
                 <div className="card card-body">
@@ -74,12 +80,19 @@ class Mailing extends Component {
                     </div>
                     <div className={showHideFailureMessage}>
                         <button type="button" className="close" data-dismiss="alert" onClick={this.changeIsMessageSentFailed}>&times;</button>
-                        Your message was unable to send. Please check your network. 
+                        Your message was unable to send. Please check your network.
                     </div>
                 </div>
             </div>
         );
     }
 }
+Mailing.propTypes = {
+    sendMail: PropTypes.func.isRequired
+}
 
-export default Mailing;
+const mapStateToProps = state => ({
+    mail: state.mail.message
+})
+
+export default connect(mapStateToProps, { sendMail })(Mailing);

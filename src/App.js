@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import Mailing from './components/Mailing/Mailing';
-import './App.css';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 class App extends Component {
   render() {
     return (
-      <div className="container">
-        <div className="mt-5">
-          <Mailing />
+      <Provider store={store}>
+        <div className="container">
+          <div className="mt-5">
+            <Mailing />
+          </div>
         </div>
-      </div>
+      </Provider>
     );
   }
 }
