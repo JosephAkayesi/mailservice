@@ -29,7 +29,7 @@ class Mailing extends Component {
             message: this.state.message
         }
 
-        this.props.sendMail(newMessage, this.toggleMessageSentSuccessfully, this.toggleMessageSentFailed)
+        this.props.sendMail(newMessage, this.toggleMessageSentSuccessfully, this.toggleMessageSentFailed, this.clearInputFormOnMessageSentSuccessful);
     }
 
     changeIsMessageSentSuccessfully = () => {
@@ -50,6 +50,14 @@ class Mailing extends Component {
         setTimeout(this.changeIsMessageSentFailed, 12000);
     }
 
+    clearInputFormOnMessageSentSuccessful = () => {
+        this.setState({
+            name: '',
+            email: '',
+            message: ''
+        });
+    }
+
     render() {
         const showHideSuccessMessage = this.state.isMessageSentSuccesfully ? "alert alert-dismissible alert-success mt-4" : "alert alert-dismissible alert-success d-none"
         const showHideFailureMessage = this.state.isMessageSentFailed ? "alert alert-dismissible alert-danger d-none" : "alert alert-dismissible alert-danger mt-4"
@@ -61,15 +69,15 @@ class Mailing extends Component {
                         <h1 className="display-4">Stay in touch</h1>
                         <div className="form-group">
                             <label>Name</label>
-                            <input type="text" name="name" className="form-control" onChange={this.onInputChange} value={this.state.name} />
+                            <input type="text" name="name" className="form-control" onChange={this.onInputChange} value={this.state.name} required />
                         </div>
                         <div className="form-group">
                             <label>Email</label>
-                            <input type="email" name="email" className="form-control" onChange={this.onInputChange} value={this.state.email} />
+                            <input type="email" name="email" className="form-control" onChange={this.onInputChange} value={this.state.email} required />
                         </div>
                         <div className="form-group">
                             <label>Message</label>
-                            <textarea name="message" className="form-control" onChange={this.onInputChange} value={this.state.message}></textarea>
+                            <textarea name="message" className="form-control" onChange={this.onInputChange} value={this.state.message} required></textarea>
                         </div>
                         <button className="btn btn-dark">Submit</button>
                     </form>
