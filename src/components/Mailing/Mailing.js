@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendMail } from '../../redux/actions/mailActions';
 
-
 class Mailing extends Component {
     constructor() {
         super();
@@ -30,18 +29,7 @@ class Mailing extends Component {
             message: this.state.message
         }
 
-<<<<<<< HEAD
         this.props.sendMail(newMessage, this.toggleMessageSentSuccessfully, this.toggleMessageSentFailed)
-=======
-        axios.post('/message/send', newMessage)
-            .then(res => console.log(`Message sent succesffuly with payload ${util.inspect(res.data)}`))
-            .then(this.messageSentSuccessfully)
-            .then(this.clearInputFieldsOnMessageSendSuccessful)
-            .catch(err => {
-                console.log(err.message);
-                this.messageSentFailed();
-            });
->>>>>>> 61a5c2659cffb45bdba852515544a0aa62874b64
     }
 
     changeIsMessageSentSuccessfully = () => {
@@ -52,7 +40,6 @@ class Mailing extends Component {
         this.setState({ isMessageSentFailed: !this.state.isMessageSentFailed });
     }
 
-<<<<<<< HEAD
     toggleMessageSentSuccessfully = () => {
         setTimeout(this.changeIsMessageSentSuccessfully);
         setTimeout(this.changeIsMessageSentSuccessfully, 12000);
@@ -61,24 +48,6 @@ class Mailing extends Component {
     toggleMessageSentFailed = () => {
         setTimeout(this.changeIsMessageSentFailed);
         setTimeout(this.changeIsMessageSentFailed, 12000);
-=======
-    clearInputFieldsOnMessageSendSuccessful = () => {
-        this.setState({
-            name: '',
-            email: '',
-            message: ''
-        });
-    }
-    
-    messageSentSuccessfully = () => {
-        setTimeout(this.changeIsMessageSentSuccessfully, 100);
-        setTimeout(this.changeIsMessageSentSuccessfully, 10000);
-    }
-
-    messageSentFailed = () => {
-        setTimeout(this.changeIsMessageSentFailed, 100);
-        setTimeout(this.changeIsMessageSentFailed, 10000);
->>>>>>> 61a5c2659cffb45bdba852515544a0aa62874b64
     }
 
     render() {
